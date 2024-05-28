@@ -1,7 +1,7 @@
 import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
 import { toNano } from '@ton/core';
 import { BulkAdder } from '../wrappers/BulkAdder';
-import '@ton-community/test-utils';
+import '@ton/test-utils';
 import { Counter } from '../wrappers/Counter';
 
 describe('BulkAdder and Counter', () => {
@@ -59,7 +59,7 @@ describe('BulkAdder and Counter', () => {
     // blockchain and bulkAdder are ready to use
   });
 
-  it('should increse to target', async () => {
+  it('should increase to target', async () => {
     const target = 5n
     const res = await bulkAdder.send(deployer.getSender(), {
       value: toNano('0.6')
@@ -71,7 +71,5 @@ describe('BulkAdder and Counter', () => {
 
     const count = await counter.getCounter()
     expect(count).toEqual(target);
-
-
   })
 });

@@ -2,6 +2,7 @@ import "@stdlib/deploy";
 
 message Deposit{
     amount: Int as uint32;
+    // queryId: Int as uint32;
 }
 
 message Withdraw{
@@ -32,10 +33,15 @@ contract Fund with Deployable {
             to: msg.target,
             value: 0,
             mode: SendRemainingValue + SendIgnoreErrors,
-            body: Deposit{amount: msg.amount}.toCell()
+            // cause of missing "queryId", this will be reverted
+            body: Deposit{
+              amount: msg.amount,
+              // queryId: 0
+            }.toCell()
         });
     }
 
+    // as the "fallback" function
     bounced(src: Deposit){
         self.balance = self.balance + src.amount;
     }
